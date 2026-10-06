@@ -1,11 +1,15 @@
 package com.tv_dd.sale_system.user.model;
 
+import com.tv_dd.sale_system.branch.model.Branch;
 import com.tv_dd.sale_system.common.model.AuditModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -31,4 +35,11 @@ public class User extends AuditModel {
 
     @Column(name = "full_name")
     private String fullName;
+
+    @Column(nullable = false)
+    private Boolean enable = true;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "branch_id", nullable = false)
+    private Branch branch;
 }
