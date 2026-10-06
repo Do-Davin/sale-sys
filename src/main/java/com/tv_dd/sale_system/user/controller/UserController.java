@@ -21,10 +21,14 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<SuccessResponse<UserResponse>> createUser(@Valid @RequestBody UserRequest request) {
+    public ResponseEntity<SuccessResponse> createUser(@Valid @RequestBody UserRequest request) {
         UserResponse response = userService.createUser(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(SuccessResponse.of("User created successfully", response));
+                .body(SuccessResponse.builder()
+                        .code(HttpStatus.CREATED)
+                        .message("User created successfully")
+                        .data(response)
+                        .build());
     }
 }

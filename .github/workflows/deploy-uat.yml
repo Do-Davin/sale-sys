@@ -52,7 +52,7 @@ jobs:
             set -a; source .env; set +a
 
             for i in {1..10}; do
-              if curl -sf "http://localhost:${SERVER_PORT}/health" > /dev/null; then
+              if curl -sf "http://localhost:8084/health" > /dev/null; then
                 echo "Health check passed"
                 exit 0
               fi

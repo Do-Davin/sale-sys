@@ -1,19 +1,18 @@
 package com.tv_dd.sale_system.common.dto;
 
-import lombok.Getter;
+import org.springframework.http.HttpStatusCode;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import tools.jackson.databind.annotation.JsonSerialize;
 
-@Getter
-public class SuccessResponse<T> {
+@Data
+@Builder
+@AllArgsConstructor
+public class SuccessResponse {
 
-    private final String message;
-    private final T data;
-
-    private SuccessResponse(String message, T data) {
-        this.message = message;
-        this.data = data;
-    }
-
-    public static <T> SuccessResponse<T> of(String message, T data) {
-        return new SuccessResponse<>(message, data);
-    }
+    @JsonSerialize(using = HttpStatusCodeSerializer.class)
+    private HttpStatusCode code;
+    private String message;
+    private Object data;
 }
