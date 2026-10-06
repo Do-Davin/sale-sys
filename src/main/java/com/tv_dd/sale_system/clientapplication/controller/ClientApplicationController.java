@@ -23,40 +23,53 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClientApplicationController {
 
-    private final ClientApplicationService clientApplicationService;
+        private final ClientApplicationService clientApplicationService;
 
-    @GetMapping
-    public ResponseEntity<SuccessResponse<List<ClientApplicationResponse>>> getAll() {
-        List<ClientApplicationResponse> data = clientApplicationService.getAll().stream()
-                .map(ClientApplicationResponse::from).toList();
+        @GetMapping
+        public ResponseEntity<SuccessResponse> getAll() {
+                List<ClientApplicationResponse> data = clientApplicationService.getAll().stream()
+                                .map(ClientApplicationResponse::from).toList();
 
-        return ResponseEntity.ok(SuccessResponse.of("Client applications retrieved successfully", data));
-    }
+                return ResponseEntity.ok(SuccessResponse.builder()
+                                .code(HttpStatus.OK)
+                                .message("Client applications retrieved successfully")
+                                .data(data)
+                                .build());
+        }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<SuccessResponse<ClientApplicationResponse>> getById(@PathVariable Integer id) {
-        ClientApplication clientApplication = clientApplicationService.getById(id);
+        @GetMapping("/{id}")
+        public ResponseEntity<SuccessResponse> getById(@PathVariable Integer id) {
+                ClientApplication clientApplication = clientApplicationService.getById(id);
 
-        return ResponseEntity.ok(SuccessResponse.of("Client application retrieved successfully",
-                ClientApplicationResponse.from(clientApplication)));
-    }
+                return ResponseEntity.ok(SuccessResponse.builder()
+                                .code(HttpStatus.OK)
+                                .message("Client application retrieved successfully")
+                                .data(ClientApplicationResponse.from(clientApplication))
+                                .build());
+        }
 
-    @PostMapping
-    public ResponseEntity<SuccessResponse<ClientApplicationResponse>> create(
-            @Valid @RequestBody ClientApplicationRequest request) {
-        ClientApplication clientApplication = clientApplicationService.create(request);
+        @PostMapping
+        public ResponseEntity<SuccessResponse> create(
+                        @Valid @RequestBody ClientApplicationRequest request) {
+                ClientApplication clientApplication = clientApplicationService.create(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(SuccessResponse.of("Client application created successfully",
-                        ClientApplicationResponse.from(clientApplication)));
-    }
+                return ResponseEntity.status(HttpStatus.CREATED)
+                                .body(SuccessResponse.builder()
+                                                .code(HttpStatus.CREATED)
+                                                .message("Client application created successfully")
+                                                .data(ClientApplicationResponse.from(clientApplication))
+                                                .build());
+        }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<SuccessResponse<ClientApplicationResponse>> update(@PathVariable Integer id,
-            @Valid @RequestBody ClientApplicationRequest request) {
-        ClientApplication clientApplication = clientApplicationService.update(id, request);
+        @PutMapping("/{id}")
+        public ResponseEntity<SuccessResponse> update(@PathVariable Integer id,
+                        @Valid @RequestBody ClientApplicationRequest request) {
+                ClientApplication clientApplication = clientApplicationService.update(id, request);
 
-        return ResponseEntity.ok(SuccessResponse.of("Client application updated successfully",
-                ClientApplicationResponse.from(clientApplication)));
-    }
+                return ResponseEntity.ok(SuccessResponse.builder()
+                                .code(HttpStatus.OK)
+                                .message("Client application updated successfully")
+                                .data(ClientApplicationResponse.from(clientApplication))
+                                .build());
+        }
 }
