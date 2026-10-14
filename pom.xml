@@ -9,7 +9,7 @@
 		<version>4.1.1</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.tv-dd</groupId>
+	<groupId>com.be001</groupId>
 	<artifactId>sale-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name />
